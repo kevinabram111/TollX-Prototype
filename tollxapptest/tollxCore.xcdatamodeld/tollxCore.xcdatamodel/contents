@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DetailTransaction" representedClassName=".DetailTransaction" syncable="YES" codeGenerationType="class">
+        <attribute name="promoID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tollDetailID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="transactionID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tripID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="promoIDreciever" maxCount="1" deletionRule="Nullify" destinationEntity="Promo" inverseName="promoIDowner" inverseEntity="Promo" syncable="YES"/>
+        <relationship name="tollDetailreciever" maxCount="1" deletionRule="Nullify" destinationEntity="TolDetail" inverseName="tollDetailIDowner" inverseEntity="TolDetail" syncable="YES"/>
+        <relationship name="tripIDreciever" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="tripIDowner" inverseEntity="Trip" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName=".Location" syncable="YES" codeGenerationType="class">
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="locationID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="locationIDowner" toMany="YES" deletionRule="Nullify" destinationEntity="TolDetail" inverseName="locationIDreciever" inverseEntity="TolDetail" syncable="YES"/>
+    </entity>
+    <entity name="Promo" representedClassName=".Promo" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="discount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="promoID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="promoIDowner" toMany="YES" deletionRule="Nullify" destinationEntity="DetailTransaction" inverseName="promoIDreciever" inverseEntity="DetailTransaction" syncable="YES"/>
+    </entity>
+    <entity name="TolDetail" representedClassName=".TolDetail" syncable="YES" codeGenerationType="class">
+        <attribute name="locationID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tolDetailID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="locationIDreciever" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locationIDowner" inverseEntity="Location" syncable="YES"/>
+        <relationship name="tollDetailIDowner" toMany="YES" deletionRule="Nullify" destinationEntity="DetailTransaction" inverseName="tollDetailreciever" inverseEntity="DetailTransaction" syncable="YES"/>
+    </entity>
+    <entity name="Transportation" representedClassName=".Transportation" syncable="YES" codeGenerationType="class">
+        <attribute name="transportationID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transportationIDowner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trip" inverseName="transportationIDreciever" inverseEntity="Trip" syncable="YES"/>
+    </entity>
+    <entity name="Trip" representedClassName=".Trip" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="destination" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="from" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transportationID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tripID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="transportationIDreciever" maxCount="1" deletionRule="Nullify" destinationEntity="Transportation" inverseName="transportationIDowner" inverseEntity="Transportation" syncable="YES"/>
+        <relationship name="tripIDowner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DetailTransaction" inverseName="tripIDreciever" inverseEntity="DetailTransaction" syncable="YES"/>
+        <relationship name="userIDreciever" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="userIDowner" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName=".User" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="userIDowner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trip" inverseName="userIDreciever" inverseEntity="Trip" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DetailTransaction" positionX="205" positionY="81" width="128" height="148"/>
+        <element name="Location" positionX="628" positionY="315" width="128" height="103"/>
+        <element name="Promo" positionX="414" positionY="35" width="128" height="118"/>
+        <element name="TolDetail" positionX="421" positionY="218" width="128" height="133"/>
+        <element name="Transportation" positionX="36" positionY="9" width="128" height="88"/>
+        <element name="Trip" positionX="-299" positionY="164" width="128" height="178"/>
+        <element name="User" positionX="171" positionY="369" width="128" height="163"/>
+    </elements>
+</model>
